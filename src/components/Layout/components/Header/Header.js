@@ -42,6 +42,10 @@ const MENU_ITEMS = [
     to: '/accountsetting',
   },
   {
+    title: 'Admin',
+    to: '/admin',
+  },
+  {
     title: 'Log Out',
     to: '/logout',
   },
@@ -275,7 +279,9 @@ function Header() {
                 </button>
               </Tippy>
             ) : (
-              <button className={cx('login-btn')}>Log in</button>
+              <button className={cx('login-btn')}>
+                <Link to={config.routes.login}>Log in</Link>
+              </button>
             )}
           </div>
         </div>

@@ -20,7 +20,7 @@ function Home() {
       <div className={cx('container')}>
         <img
           className={cx('thumbnail')}
-          src="https://brand.assets.adidas.com/image/upload/f_auto,q_auto,fl_lossy/if_w_gt_1920,w_1920/enVN/Images/football-fw23-federations-agnostics-hp-mh-d_tcm212-1000361.jpg"
+          src="https://brand.assets.adidas.com/image/upload/f_auto,q_auto,fl_lossy/if_w_gt_1920,w_1920/enVN/Images/hoc-blackpink-mh-dt_tcm212-1022401.jpg"
           alt="Adidas"
         />
         <div className={cx('wrapper-container')}>
@@ -40,7 +40,7 @@ function Home() {
       <div className={cx('container')}>
         <img
           className={cx('thumbnail')}
-          src="https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1750,c_limit/445b0be1-5f21-49be-9247-b042f59742b3/nike-just-do-it.jpg"
+          src="https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1754,c_limit/a19feb8b-c130-4de0-8dea-f74bcd9437db/nike-just-do-it.png"
           alt="Nike"
         />
         <div className={cx('wrapper-container')}>
@@ -56,11 +56,15 @@ function Home() {
       <div className={cx('container')}>
         <img
           className={cx('thumbnail')}
-          src="https://www.newbalance.com/dw/image/v2/AAGI_PRD/on/demandware.static/-/Library-Sites-NBUS-NBCA/default/dwe7775d8a/images/page-designer/2023/april/15266_Comp_A_Desktop.jpg?sw=1616&sfrm=jpg"
+          src="https://www.newbalance.com/dw/image/v2/AAGI_PRD/on/demandware.static/-/Library-Sites-NBUS-NBCA/default/dw36a5195c/images/page-designer/2023/may/15310_Comp_A_Desktop.jpg?sw=1616&sfrm=jpg"
           alt="New Balance"
         />
         <div className={cx('wrapper-container')}>
-          <img src="https://www.freepnglogos.com/uploads/new-balance-png-logo/new-balance-logo-png-white-0.png" className={cx('logo-label')} alt="logo New Balance" />
+          <img
+            src="https://www.freepnglogos.com/uploads/new-balance-png-logo/new-balance-logo-png-white-0.png"
+            className={cx('logo-label')}
+            alt="logo New Balance"
+          />
           <button className={cx('btn-shopping')}>
             <span className={cx('content-btn')}>Shop now</span>
             <FontAwesomeIcon icon={faArrowRight} />

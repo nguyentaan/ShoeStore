@@ -5,6 +5,8 @@ const routes = {
     female:'/female',
     profile: '/profile',
     productItem: '/productitem',
+    login:'/login',
+    register:'/register',
 }
 
 export default routes;
