@@ -7,6 +7,7 @@ const routes = {
     productItem: '/productitem',
     login:'/login',
     register:'/register',
+    customermanagement:'/customermanagement',
 }
 
 export default routes;

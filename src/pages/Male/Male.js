@@ -17,11 +17,14 @@ function Male() {
 
   return (
     <div className={cx('experience-wrapper')}>
-      <div className={cx('sidebar')} style={{ display: visible ? 'block' : 'none' }}>
+      <div className={cx('sidebar')} style={{ display: visible ? 'block' : 'none', transition: 'margin-left 0.4s ease-in-out' }}>
         <Sidebar />
       </div>
 
-      <div className={cx('product-grid', 'sub-product-grid')}>
+      <div
+        className={cx('product-grid', 'sub-product-grid')}
+        style={{ marginLeft: visible ? '356px' : '0px', transition: 'margin-left 0.3s ease-in-out' }}
+      >
         <header className={cx('wall-header')}>
           <div className={cx('wall-header_content')}>
             <nav className={cx('wall-header_nav')}>

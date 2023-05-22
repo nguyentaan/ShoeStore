@@ -9,9 +9,11 @@ import Product from '~/pages/Product';
 import Male from '~/pages/Male/Male';
 import Female from '~/pages/Female';
 import Profile from '~/pages/Profile';
-import ProductItem from '~/pages/ProductItem/productItem';
+import ProductItem from '~/pages/ProductItem/ProductItem';
 import Login from '~/pages/Login';
-import Register from '~/pages/Resgister/Register';
+import Register from '~/pages/Resgister';
+import CustomerManagement from '~/pages/CustomerManagement';
+import AdminLayout from '~/components/Layout/AdminLayout/AdminLayout';
 
 //public Routes
 const publicRoutes = [
@@ -23,6 +25,7 @@ const publicRoutes = [
   { path: config.routes.productItem, component: ProductItem, layout: HeaderOnly },
   { path: config.routes.login, component: Login, layout: DefaultLayout },
   { path: config.routes.register, component: Register, layout: DefaultLayout },
+  { path: config.routes.customermanagement, component: CustomerManagement, layout: AdminLayout },
 ];
 
 //private routes

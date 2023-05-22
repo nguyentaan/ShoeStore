@@ -43,7 +43,7 @@ const MENU_ITEMS = [
   },
   {
     title: 'Admin',
-    to: '/admin',
+    to: '/customermanagement',
   },
   {
     title: 'Log Out',
@@ -64,9 +64,9 @@ function Header() {
   // function render Item trong MENU_ITEMS
   const renderItem = () => {
     return MENU_ITEMS.map((MENU_ITEMS, index) => (
-      <button className={cx('menu-items')} key={index} to={MENU_ITEMS.to}>
+      <Link className={cx('menu-items')} key={index} to={MENU_ITEMS.to}>
         {MENU_ITEMS.title}
-      </button>
+      </Link>
     ));
   };
 

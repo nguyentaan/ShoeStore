@@ -1,6 +1,6 @@
 import { faChevronDown, faChevronUp, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './productItem.module.scss';
 
@@ -9,6 +9,9 @@ const cx = classNames.bind(styles);
 function productItem() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [collapsed, setCollapsed] = useState(true);
+
+  // const [selectedSize, setSelectedSize] = useState('');
+
   return (
     <div className={cx('product-container', 'css-1wpyz1n')}>
       <div className={cx('box-content-wrapper')}>

@@ -36,7 +36,9 @@ function Login() {
           <div className={cx('right-side')}>
             <div className={cx('wrapper-img')}>
               <img src={Mythumb} atl="mythumb" className={cx('thumb-img')} />
-              <img src={Mylogo} atl="mylogo" className={cx('logo-img')} />
+              <Link to={config.routes.home}>
+                <img src={Mylogo} atl="mylogo" className={cx('logo-img')} />
+              </Link>
             </div>
           </div>
         </div>
