@@ -8,6 +8,7 @@ const routes = {
     login:'/login',
     register:'/register',
     customermanagement:'/customermanagement',
+    productmanagement:'/productmanagement',
 }
 
 export default routes;

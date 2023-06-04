@@ -1,14 +1,19 @@
 import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faMagnifyingGlass, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import classNames from 'classnames/bind';
 import styles from './CustomerManagement.module.scss';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import AddCustomer from '~/components/Layout/components/AddCustomer/AddCustomer';
 
 const cx = classNames.bind(styles);
 
-const sampleData = [
+let sampleData = [
   {
     customer: '001',
     name: 'Nguyen Van Tan',
@@ -16,23 +21,16 @@ const sampleData = [
     email: 'vantaan2002@gmail.com',
     birth: '23/03/2002',
     address: 'BR-VT',
-    city: 'BR-VT',
-    country: 'Viet Nam',
+    gender: 'male',
   },
 ];
 
 function CustomerManagement() {
-  // const [searchResult, setSearchResult] = useState([]);
   const [searchValue, setSearchValue] = useState('');
-  const [showForm, setShowForm] = useState(false);
 
   const inputRef = useRef();
 
-  const handleAddClick = () => {
-    setShowForm(true);
-  };
   const handleClear = () => {
-    // setSearchResult([]);
     setSearchValue('');
     inputRef.current.focus();
   };
@@ -44,23 +42,32 @@ function CustomerManagement() {
     }
   };
 
-  const handleAddCustomer = (newCustomer) => {
-    sampleData = [...sampleData, newCustomer];
-    // sampleData.push(newCustomer);
-    setShowForm(false);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
-  const handleHideAddCustomer = () => {
-    setShowForm(false);
-    console.log(setShowForm);
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
     <section className={cx('wrapper')}>
       <div className={cx('function-site')}>
-        <button onClick={handleAddClick} className={cx('btn-add')}>
-          <span>ADD</span>
+        <button variant="outlined" onClick={handleClickOpen} className={cx('btn-add')}>
+          ADD
         </button>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Add Customer</DialogTitle>
+          <DialogContent>
+            <AddCustomer />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleClose}>Submit</Button>
+          </DialogActions>
+        </Dialog>
         <div className={cx('search-site')}>
           <button className={cx('search-btn')}>
             <FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -80,75 +87,67 @@ function CustomerManagement() {
         </div>
       </div>
       <div className={cx('table-site')}>
-        {showForm ? (
-          <>
-            <AddCustomer onAddCustomer={handleAddCustomer} />
-            <div className={cx('close')}>
-              <button onHide={handleHideAddCustomer} className={cx('btn-close')}>
-                Close
-              </button>
+        <div className={cx('table')}>
+          <div className={cx('table-grid')}>
+            <div className={cx('row-site')}>
+              <h5 className={cx('row-title')}>Customer</h5>
             </div>
-          </>
-        ) : (
-          <div className={cx('table')}>
-            <div className={cx('table-grid')}>
-              <div className={cx('row-site')}>
-                <h5 className={cx('row-title')}>Customer</h5>
-              </div>
-              <div className={cx('row-site')}>
-                <h5 className={cx('row-title')}>Name</h5>
-              </div>
-              <div className={cx('row-site')}>
-                <h5 className={cx('row-title')}>Phone</h5>
-              </div>
-              <div className={cx('row-site')}>
-                <h5 className={cx('row-title')}>Email</h5>
-              </div>
-              <div className={cx('row-site')}>
-                <h5 className={cx('row-title')}>BirthDay</h5>
-              </div>
-              <div className={cx('row-site')}>
-                <h5 className={cx('row-title')}>Address</h5>
-              </div>
-              <div className={cx('row-site')}>
-                <h5 className={cx('row-title')}>City</h5>
-              </div>
-              <div className={cx('row-site')}>
-                <h5 className={cx('row-title')}>Country</h5>
-              </div>
+            <div className={cx('row-site')}>
+              <h5 className={cx('row-title')}>Name</h5>
             </div>
-            {sampleData.map((val, key) => {
-              return (
-                <div key={key} className={cx('table-grid', 'item-grid')}>
-                  <div className={cx('item-site')}>
-                    <p className={cx('item-content')}>{val.customer}</p>
-                  </div>
-                  <div className={cx('item-site')}>
-                    <p className={cx('item-content')}>{val.name}</p>
-                  </div>
-                  <div className={cx('item-site')}>
-                    <p className={cx('item-content')}>{val.phone}</p>
-                  </div>
-                  <div className={cx('item-site')}>
-                    <p className={cx('item-content')}>{val.email}</p>
-                  </div>
-                  <div className={cx('item-site')}>
-                    <p className={cx('item-content')}>{val.birth}</p>
-                  </div>
-                  <div className={cx('item-site')}>
-                    <p className={cx('item-content')}>{val.address}</p>
-                  </div>
-                  <div className={cx('item-site')}>
-                    <p className={cx('item-content')}>{val.city}</p>
-                  </div>
-                  <div className={cx('item-site')}>
-                    <p className={cx('item-content')}>{val.country}</p>
+            <div className={cx('row-site')}>
+              <h5 className={cx('row-title')}>Phone</h5>
+            </div>
+            <div className={cx('row-site')}>
+              <h5 className={cx('row-title')}>Email</h5>
+            </div>
+            <div className={cx('row-site')}>
+              <h5 className={cx('row-title')}>BirthDay</h5>
+            </div>
+            <div className={cx('row-site')}>
+              <h5 className={cx('row-title')}>Address</h5>
+            </div>
+            <div className={cx('row-site')}>
+              <h5 className={cx('row-title')}>Gender</h5>
+            </div>
+            <div className={cx('row-site')}>
+              <h5 className={cx('row-title')}>Actions</h5>
+            </div>
+          </div>
+          {sampleData.map((val, key) => {
+            return (
+              <div key={key} className={cx('table-grid', 'item-grid')}>
+                <div className={cx('item-site')}>
+                  <p className={cx('item-content')}>{val.customer}</p>
+                </div>
+                <div className={cx('item-site')}>
+                  <p className={cx('item-content')}>{val.name}</p>
+                </div>
+                <div className={cx('item-site')}>
+                  <p className={cx('item-content')}>{val.phone}</p>
+                </div>
+                <div className={cx('item-site')}>
+                  <p className={cx('item-content')}>{val.email}</p>
+                </div>
+                <div className={cx('item-site')}>
+                  <p className={cx('item-content')}>{val.birth}</p>
+                </div>
+                <div className={cx('item-site')}>
+                  <p className={cx('item-content')}>{val.address}</p>
+                </div>
+                <div className={cx('item-site')}>
+                  <p className={cx('item-content')}>{val.gender}</p>
+                </div>
+                <div className={cx('item-site')}>
+                  <div className={cx('wrapper-icon')}>
+                    <FontAwesomeIcon className={cx('icon-action')} icon={faPencil} />
+                    <FontAwesomeIcon className={cx('icon-action')} icon={faTrash} />
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

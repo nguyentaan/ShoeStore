@@ -2,6 +2,7 @@ import config from '~/config';
 
 //layouts
 import { DefaultLayout, HeaderOnly } from '~/components/Layout';
+import AdminLayout from '~/components/Layout/AdminLayout/AdminLayout';
 
 //Pages
 import Home from '~/pages/Home';
@@ -13,7 +14,7 @@ import ProductItem from '~/pages/ProductItem/ProductItem';
 import Login from '~/pages/Login';
 import Register from '~/pages/Resgister';
 import CustomerManagement from '~/pages/CustomerManagement';
-import AdminLayout from '~/components/Layout/AdminLayout/AdminLayout';
+import ProductManagement from '~/pages/ProductManagement';
 
 //public Routes
 const publicRoutes = [
@@ -26,6 +27,7 @@ const publicRoutes = [
   { path: config.routes.login, component: Login, layout: DefaultLayout },
   { path: config.routes.register, component: Register, layout: DefaultLayout },
   { path: config.routes.customermanagement, component: CustomerManagement, layout: AdminLayout },
+  { path: config.routes.productmanagement, component: ProductManagement, layout: AdminLayout },
 ];
 
 //private routes

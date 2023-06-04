@@ -26,6 +26,23 @@
   }
 }
 
+.container {
+  max-width: 1080px;
+  overflow-x: visible;
+  .row-form {
+    width: 50vh;
+  }
+}
+
+.row-form {
+  display: flex;
+  gap: 18px;
+
+  TextField {
+    width: 100%;
+  }
+}
+
 .search-site {
   height: 100%;
   display: flex;
@@ -126,17 +143,17 @@
   display: block;
 }
 
-.wrapper-icon{
+.wrapper-icon {
   display: flex;
   width: 100%;
   justify-content: center;
 }
 
-.icon-action{
+.icon-action {
   font-size: 1.6rem;
   padding: 8px;
 
-  &:hover{
+  &:hover {
     cursor: pointer;
     border-radius: 99px;
     background-color: #aac8a7;

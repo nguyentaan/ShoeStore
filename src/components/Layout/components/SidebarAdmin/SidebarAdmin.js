@@ -10,6 +10,8 @@ import {
   faWarehouse,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -23,7 +25,8 @@ function SidebarAdmin() {
     <div className={cx('nav-wrapper')}>
       <ul className={cx('nax-side')}>
         <li className={cx('nav-items')}>
-          <div
+          <Link
+            to={config.routes.customermanagement}
             className={cx('nav-link', `${activeItem === 'customer' ? 'active' : ''}`)}
             onClick={() => handleItemClick('customer')}
             disabled={activeItem === 'customer'}
@@ -32,10 +35,11 @@ function SidebarAdmin() {
               <FontAwesomeIcon icon={faList} />
             </div>
             <span className={cx('nav-title')}>Customer Management</span>
-          </div>
+          </Link>
         </li>
         <li className={cx('nav-items')}>
-          <div
+          <Link
+            to={config.routes.productmanagement}
             className={cx('nav-link', `${activeItem === 'product' ? 'active' : ''}`)}
             onClick={() => handleItemClick('product')}
           >
@@ -43,7 +47,7 @@ function SidebarAdmin() {
               <FontAwesomeIcon icon={faBook} />
             </div>
             <span className={cx('nav-title')}>Product Management</span>
-          </div>
+          </Link>
         </li>
         <li className={cx('nav-items')}>
           <div
