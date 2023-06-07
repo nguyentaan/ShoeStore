@@ -9,6 +9,8 @@ const routes = {
     register:'/register',
     customermanagement:'/customermanagement',
     productmanagement:'/productmanagement',
+    suppliermanagement:'/suppliermanagement',
+    inventorymanagement:'/inventorymanagement',
 }
 
 export default routes;

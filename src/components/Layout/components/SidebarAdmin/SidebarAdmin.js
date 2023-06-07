@@ -51,7 +51,8 @@ function SidebarAdmin() {
           </Link>
         </li>
         <li className={cx('nav-items')}>
-          <div
+          <Link
+            to={config.routes.suppliermanagement}
             className={cx('nav-link', `${activeItem === 'supplier' ? 'active' : ''}`)}
             onClick={() => handleItemClick('supplier')}
           >
@@ -59,10 +60,11 @@ function SidebarAdmin() {
               <FontAwesomeIcon icon={faBoxesPacking} />
             </div>
             <span className={cx('nav-title')}>Supplier Management</span>
-          </div>
+          </Link>
         </li>
         <li className={cx('nav-items')}>
-          <div
+          <Link
+            to={config.routes.inventorymanagement}
             className={cx('nav-link', `${activeItem === 'inventory' ? 'active' : ''}`)}
             onClick={() => handleItemClick('inventory')}
           >
@@ -70,7 +72,7 @@ function SidebarAdmin() {
               <FontAwesomeIcon icon={faWarehouse} />
             </div>
             <span className={cx('nav-title')}>Inventory Management</span>
-          </div>
+          </Link>
         </li>
         <li className={cx('nav-items')}>
           <div

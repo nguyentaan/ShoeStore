@@ -4,10 +4,11 @@
       "id": 1,
       "name": "Nike Airforce 1",
       "price": "120",
-      "type": "walking",
+      "type": "unisex",
       "style": "Unisex",
       "brand": "nike",
-      "supplier": "C001"
+      "size": "34",
+      "color": "grey"
     },
     {
       "name": "Nike Airfore 1",
@@ -15,26 +16,9 @@
       "type": "Street",
       "style": "Unisex",
       "brand": "nike",
-      "supplier": "C002",
+      "size": "34",
+      "color": "white",
       "id": 2
-    },
-    {
-      "name": "Ultraboost Light Shoes",
-      "price": "220",
-      "type": "Running",
-      "style": "Men",
-      "brand": "adidas",
-      "supplier": "C003",
-      "id": 3
-    },
-    {
-      "name": "Response Runner Shoes",
-      "price": "50",
-      "type": "Running",
-      "style": "Men",
-      "brand": "adidas",
-      "supplier": "C003",
-      "id": 4
     }
   ],
   "customers": [

@@ -12,6 +12,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import axios from 'axios';
 
 const cx = classNames.bind(styles);
@@ -27,8 +30,9 @@ function ProductManagement() {
   const [productPrice, setProductPrice] = useState();
   const [productType, setProductType] = useState('');
   const [productStyle, setProductStyle] = useState('');
-  const [productBrand, setProductBrand] = useState('adidas');
-  const [productSupplier, setProductSupplier] = useState('');
+  const [productBrand, setProductBrand] = useState('');
+  const [productSize, setProductSize] = useState('');
+  const [productColor, setProductColor] = useState('');
 
   const inputRef = useRef();
 
@@ -61,15 +65,17 @@ function ProductManagement() {
       setProductType(product.type);
       setProductStyle(product.style);
       setProductBrand(product.brand);
-      setProductSupplier(product.supplier);
+      setProductSize(product.size);
+      setProductColor(product.color);
     } else {
       setProduct({});
       setProductName('');
       setProductPrice('');
       setProductType('');
       setProductStyle('');
-      setProductBrand('adidas');
-      setProductSupplier('');
+      setProductBrand('');
+      setProductSize('');
+      setProductColor('');
     }
     setOpen(true);
   };
@@ -123,7 +129,8 @@ function ProductManagement() {
       type: productType,
       style: productStyle,
       brand: productBrand,
-      supplier: productSupplier,
+      size: productSize,
+      color: productColor,
     };
 
     if (
@@ -131,7 +138,8 @@ function ProductManagement() {
       productPrice.trim() === '' ||
       productType.trim() === '' ||
       productStyle.trim() === '' ||
-      productSupplier.trim() === ''
+      productSize.trim() === '' ||
+      productColor.trim() === ''
     ) {
       console.log('Please fill in all product information.');
       return;
@@ -187,18 +195,20 @@ function ProductManagement() {
                   />
                 </div>
                 <div className={cx('row-form')}>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="type"
-                    label="type"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    autoComplete="on"
-                    value={productType}
-                    onChange={(e) => setProductType(e.target.value)}
-                  />
+                  <FormControl style={{ margin: '8px 0' }} variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="type-label">Type</InputLabel>
+                    <Select
+                      labelId="type-label"
+                      id="type"
+                      value={productType}
+                      onChange={(e) => setProductType(e.target.value)}
+                      label="Type"
+                    >
+                      <MenuItem value="unisex">Unisex</MenuItem>
+                      <MenuItem value="male">Male</MenuItem>
+                      <MenuItem value="female">Female</MenuItem>
+                    </Select>
+                  </FormControl>
                   <TextField
                     autoFocus
                     margin="dense"
@@ -213,34 +223,71 @@ function ProductManagement() {
                   />
                 </div>
                 <div className={cx('row-form')}>
-                  <FormControl>
-                    <FormLabel id="demo-radio-buttons-group-label">Brand</FormLabel>
-                    <RadioGroup
-                      aria-labelledby="demo-radio-buttons-group-label"
-                      defaultValue="adidas"
-                      name="radio-buttons-group"
+                  <FormControl style={{ margin: '8px 0' }} variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="brand">Brand</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-standard-label"
+                      id="brand"
                       value={productBrand}
                       onChange={(e) => setProductBrand(e.target.value)}
+                      label="Brand"
                     >
-                      <FormControlLabel value="adidas" control={<Radio />} label="Adidas" />
-                      <FormControlLabel value="nike" control={<Radio />} label="Nike" />
-                      <FormControlLabel value="newbalance" control={<Radio />} label="New Balance" />
+                      <MenuItem value={'adidas'}>adidas</MenuItem>
+                      <MenuItem value={'nike'}>nike</MenuItem>
+                      <MenuItem value={'new balance'}>new balance</MenuItem>
+                    </Select>
+                  </FormControl>
+
+                  <FormControl style={{ margin: '8px 0' }} className={cx('size-grid')}>
+                    <FormLabel id="size">Size</FormLabel>
+                    <RadioGroup
+                      aria-labelledby="demo-radio-buttons-group-label"
+                      defaultValue={35}
+                      name="size"
+                      value={productSize}
+                      onChange={(e) => setProductSize(e.target.value)}
+                    >
+                      <div className={cx('size-flex')}>
+                        <FormControlLabel value={34} control={<Radio />} label="34" />
+                        <FormControlLabel value={35} control={<Radio />} label="35" />
+                        <FormControlLabel value={36} control={<Radio />} label="36" />
+                        <FormControlLabel value={37} control={<Radio />} label="37" />
+                        <FormControlLabel value={38} control={<Radio />} label="38" />
+                        <FormControlLabel value={39} control={<Radio />} label="39" />
+                        <FormControlLabel value={40} control={<Radio />} label="40" />
+                        <FormControlLabel value={41} control={<Radio />} label="41" />
+                        <FormControlLabel value={42} control={<Radio />} label="42" />
+                        <FormControlLabel value={43} control={<Radio />} label="43" />
+                        <FormControlLabel value={44} control={<Radio />} label="44" />
+                        <FormControlLabel value={45} control={<Radio />} label="45" />
+                      </div>
                     </RadioGroup>
                   </FormControl>
                 </div>
                 <div className={cx('row-form')}>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="supplier"
-                    label="supplier"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    autoComplete="on"
-                    value={productSupplier}
-                    onChange={(e) => setProductSupplier(e.target.value)}
-                  />
+                  <FormControl style={{ margin: '8px 0' }} variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="Color">Color</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-standard-label"
+                      id="color"
+                      value={productColor}
+                      onChange={(e) => setProductColor(e.target.value)}
+                      label="color"
+                    >
+                      <MenuItem value={'black'}>black</MenuItem>
+                      <MenuItem value={'blue'}>blue</MenuItem>
+                      <MenuItem value={'brown'}>brown</MenuItem>
+                      <MenuItem value={'green'}>green</MenuItem>
+                      <MenuItem value={'grey'}>grey</MenuItem>
+                      <MenuItem value={'multi-clour'}>multi-colour</MenuItem>
+                      <MenuItem value={'orange'}>orange</MenuItem>
+                      <MenuItem value={'pink'}>pink</MenuItem>
+                      <MenuItem value={'purple'}>purple</MenuItem>
+                      <MenuItem value={'red'}>red</MenuItem>
+                      <MenuItem value={'white'}>white</MenuItem>
+                      <MenuItem value={'yellow'}>yellow</MenuItem>
+                    </Select>
+                  </FormControl>
                 </div>
               </div>
             </DialogContent>
@@ -297,7 +344,10 @@ function ProductManagement() {
               <h5 className={cx('row-title')}>Brand</h5>
             </div>
             <div className={cx('row-site')}>
-              <h5 className={cx('row-title')}>Supplier</h5>
+              <h5 className={cx('row-title')}>Size</h5>
+            </div>
+            <div className={cx('row-site')}>
+              <h5 className={cx('row-title')}>Color</h5>
             </div>
             <div className={cx('row-site')}>
               <h5 className={cx('row-title')}>Actions</h5>
@@ -309,7 +359,7 @@ function ProductManagement() {
                 <div className={cx('item-site')}>
                   <p className={cx('item-content')}>{pro.id}</p>
                 </div>
-                <div className={cx('item-site')}>
+                <div className={cx('item-site1')}>
                   <p className={cx('item-content')}>{pro.name}</p>
                 </div>
                 <div className={cx('item-site')}>
@@ -325,7 +375,10 @@ function ProductManagement() {
                   <p className={cx('item-content')}>{pro.brand}</p>
                 </div>
                 <div className={cx('item-site')}>
-                  <p className={cx('item-content')}>{pro.supplier}</p>
+                  <p className={cx('item-content')}>{pro.size}</p>
+                </div>
+                <div className={cx('item-site')}>
+                  <p className={cx('item-content')}>{pro.color}</p>
                 </div>
                 <div className={cx('item-site')}>
                   <div className={cx('wrapper-icon')}>

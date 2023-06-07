@@ -15,6 +15,8 @@ import Login from '~/pages/Login';
 import Register from '~/pages/Resgister';
 import CustomerManagement from '~/pages/CustomerManagement';
 import ProductManagement from '~/pages/ProductManagement';
+import SupplierManagement from '~/pages/SuppilerManagement/SupplierManagement';
+import InventoryManagement from '~/pages/InventoryManagement/InventoryManagement';
 
 //public Routes
 const publicRoutes = [
@@ -28,6 +30,8 @@ const publicRoutes = [
   { path: config.routes.register, component: Register, layout: DefaultLayout },
   { path: config.routes.customermanagement, component: CustomerManagement, layout: AdminLayout },
   { path: config.routes.productmanagement, component: ProductManagement, layout: AdminLayout },
+  { path: config.routes.suppliermanagement, component: SupplierManagement, layout: AdminLayout },
+  { path: config.routes.inventorymanagement, component: InventoryManagement, layout: AdminLayout },
 ];
 
 //private routes
