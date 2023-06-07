@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBook,
   faBoxesPacking,
+  faFileInvoice,
   faFilePdf,
   faList,
   faUsersRectangle,
@@ -80,6 +81,17 @@ function SidebarAdmin() {
               <FontAwesomeIcon icon={faUsersRectangle} />
             </div>
             <span className={cx('nav-title')}>User Management</span>
+          </div>
+        </li>
+        <li className={cx('nav-items')}>
+          <div
+            className={cx('nav-link', `${activeItem === 'invoice' ? 'active' : ''}`)}
+            onClick={() => handleItemClick('invoice')}
+          >
+            <div className={cx('nav-icon')}>
+              <FontAwesomeIcon icon={faFileInvoice} />
+            </div>
+            <span className={cx('nav-title')}>Invoice Management</span>
           </div>
         </li>
         <li className={cx('nav-items')}>

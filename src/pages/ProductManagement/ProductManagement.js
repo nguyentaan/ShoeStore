@@ -20,6 +20,8 @@ function ProductManagement() {
   const [searchValue, setSearchValue] = useState('');
   const [open, setOpen] = useState(false);
   const [product, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [filteredProduct, setFilteredProduct] = useState([]);
 
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState();
@@ -36,15 +38,24 @@ function ProductManagement() {
   };
 
   const handleChange = (e) => {
-    const searchValue = e.target.value;
+    const searchValue = e.target.value.toLowerCase();
     if (!searchValue.startsWith(' ')) {
       setSearchValue(searchValue);
     }
   };
 
+  useEffect(() => {
+    const filteredProducts = products.filter((pro) =>
+      Object.values(pro).some(
+        (value) => value && typeof value === 'string' && value.toLowerCase().includes(searchValue.toLowerCase()),
+      ),
+    );
+    setFilteredProduct(filteredProducts);
+  }, [searchValue, products]);
+
   const handleClickOpen = (product) => {
     if (product.id) {
-      // Nếu có sản phẩm đã chọn, thực hiện chỉnh sửa sản phẩm
+      setProduct(product);
       setProductName(product.name);
       setProductPrice(product.price);
       setProductType(product.type);
@@ -52,7 +63,7 @@ function ProductManagement() {
       setProductBrand(product.brand);
       setProductSupplier(product.supplier);
     } else {
-      // Nếu không có sản phẩm đã chọn, thực hiện thêm sản phẩm mới
+      setProduct({});
       setProductName('');
       setProductPrice('');
       setProductType('');
@@ -74,7 +85,7 @@ function ProductManagement() {
   const fetchProducts = () => {
     axios
       .get('http://localhost:3000/product')
-      .then((res) => setProduct(res.data))
+      .then((res) => setProducts(res.data))
       .catch((err) => console.log(err));
   };
 
@@ -122,21 +133,16 @@ function ProductManagement() {
       productStyle.trim() === '' ||
       productSupplier.trim() === ''
     ) {
-      // Kiểm tra các trường dữ liệu có bị bỏ trống không
-      console.log('Vui lòng điền đầy đủ thông tin sản phẩm');
+      console.log('Please fill in all product information.');
       return;
     }
 
     if (product.id) {
-      // Nếu có sản phẩm đã chọn, thực hiện cập nhật sản phẩm
       const updatedProduct = { ...product, ...productData };
       handleUpdateProduct(updatedProduct);
     } else {
-      // Nếu không có sản phẩm đã chọn, thực hiện thêm sản phẩm mới
       handleAddProduct(productData);
     }
-
-    console.log(productData);
 
     handleClose();
   };
@@ -148,7 +154,7 @@ function ProductManagement() {
           ADD
         </button>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Add Product</DialogTitle>
+          <DialogTitle>{product.id ? 'Edit Product' : 'Add Product'}</DialogTitle>
           <form onSubmit={handleSubmit}>
             <DialogContent>
               <div className={cx('container')}>
@@ -157,12 +163,12 @@ function ProductManagement() {
                     autoFocus
                     margin="dense"
                     id="name"
-                    label="name"
+                    label="Product name"
                     type="text"
                     fullWidth
                     variant="standard"
                     autoComplete="on"
-                    value={product.name}
+                    value={productName}
                     onChange={(e) => setProductName(e.target.value)}
                   />
                 </div>
@@ -176,7 +182,7 @@ function ProductManagement() {
                     fullWidth
                     variant="standard"
                     autoComplete="on"
-                    value={product.price}
+                    value={productPrice}
                     onChange={(e) => setProductPrice(e.target.value)}
                   />
                 </div>
@@ -190,7 +196,7 @@ function ProductManagement() {
                     fullWidth
                     variant="standard"
                     autoComplete="on"
-                    value={product.type}
+                    value={productType}
                     onChange={(e) => setProductType(e.target.value)}
                   />
                   <TextField
@@ -202,7 +208,7 @@ function ProductManagement() {
                     fullWidth
                     variant="standard"
                     autoComplete="on"
-                    value={product.style}
+                    value={productStyle}
                     onChange={(e) => setProductStyle(e.target.value)}
                   />
                 </div>
@@ -232,7 +238,7 @@ function ProductManagement() {
                     fullWidth
                     variant="standard"
                     autoComplete="on"
-                    value={product.supplier}
+                    value={productSupplier}
                     onChange={(e) => setProductSupplier(e.target.value)}
                   />
                 </div>
@@ -247,7 +253,7 @@ function ProductManagement() {
                 handleClose();
               }}
             >
-              Submit
+              {product.id ? 'Update Entry' : 'Submit'}
             </Button>
           </DialogActions>
         </Dialog>
@@ -276,7 +282,7 @@ function ProductManagement() {
               <h5 className={cx('row-title')}>ProductID</h5>
             </div>
             <div className={cx('row-site')}>
-              <h5 className={cx('row-title')}>Name</h5>
+              <h5 className={cx('row-title')}>Product</h5>
             </div>
             <div className={cx('row-site')}>
               <h5 className={cx('row-title')}>Price</h5>
@@ -297,7 +303,7 @@ function ProductManagement() {
               <h5 className={cx('row-title')}>Actions</h5>
             </div>
           </div>
-          {product.map((pro) => {
+          {filteredProduct.map((pro) => {
             return (
               <div key={pro.id} className={cx('table-grid', 'item-grid')}>
                 <div className={cx('item-site')}>
@@ -307,7 +313,7 @@ function ProductManagement() {
                   <p className={cx('item-content')}>{pro.name}</p>
                 </div>
                 <div className={cx('item-site')}>
-                  <p className={cx('item-content')}>{pro.price}</p>
+                  <p className={cx('item-content')}>{pro.price}$</p>
                 </div>
                 <div className={cx('item-site')}>
                   <p className={cx('item-content')}>{pro.type}</p>
@@ -327,7 +333,6 @@ function ProductManagement() {
                       className={cx('icon-action')}
                       icon={faPencil}
                       onClick={() => {
-                        handleUpdateProduct(pro);
                         handleClickOpen(pro);
                       }}
                     />
