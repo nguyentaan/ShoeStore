@@ -1,32 +1,38 @@
-import { useRef, useState } from 'react';
+import classNames from 'classnames/bind';
+import styles from './CustomerManagement.module.scss';
+
+import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faMagnifyingGlass, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import classNames from 'classnames/bind';
-import styles from './CustomerManagement.module.scss';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import AddCustomer from '~/components/Layout/components/AddCustomer/AddCustomer';
+import TextField from '@mui/material/TextField';
+import { FormControl } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
-let sampleData = [
-  {
-    customer: '001',
-    name: 'Nguyen Van Tan',
-    phone: '0345944241',
-    email: 'vantaan2002@gmail.com',
-    birth: '23/03/2002',
-    address: 'BR-VT',
-    gender: 'male',
-  },
-];
-
-function CustomerManagement() {
+function ProductManagement() {
   const [searchValue, setSearchValue] = useState('');
+  const [open, setOpen] = useState(false);
+  const [customer, setCustomer] = useState([]);
+  const [customers, setCustomers] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [customerBirth, setcustomerBirth] = useState('');
+  const [customerAddress, setCustomerAddress] = useState('');
+  const [customerCity, setCustomerCity] = useState('');
+  const [customerGender, setCustomerGender] = useState('');
 
   const inputRef = useRef();
 
@@ -36,20 +42,118 @@ function CustomerManagement() {
   };
 
   const handleChange = (e) => {
-    const searchValue = e.target.value;
+    const searchValue = e.target.value.toLowerCase();
     if (!searchValue.startsWith(' ')) {
       setSearchValue(searchValue);
     }
   };
 
-  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const filteredCustomers = customers.filter((cus) =>
+      Object.values(cus).some(
+        (value) => value && typeof value === 'string' && value.toLowerCase().includes(searchValue.toLowerCase()),
+      ),
+    );
+    setFiltered(filteredCustomers);
+  }, [searchValue, customers]);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (customer) => {
+    if (customer.id) {
+      setCustomer(customer);
+      setCustomerName(customer.name);
+      setCustomerPhone(customer.phone);
+      setCustomerEmail(customer.email);
+      setcustomerBirth(customer.birth);
+      setCustomerAddress(customer.address);
+      setCustomerCity(customer.city);
+      setCustomerGender(customer.gender);
+    } else {
+      setCustomer({});
+      setCustomerName('');
+      setCustomerPhone('');
+      setCustomerEmail('');
+      setcustomerBirth('');
+      setCustomerAddress('');
+      setCustomerCity('');
+      setCustomerGender('');
+    }
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
+
+  const fetchCustomers = () => {
+    axios
+      .get('http://localhost:3000/customers')
+      .then((res) => setCustomers(res.data))
+      .catch((err) => console.log(err));
+  };
+
+  const handleAddProduct = (customer) => {
+    axios
+      .post('http://localhost:3000/customers', customer)
+      .then(() => {
+        fetchCustomers();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleUpdateProduct = (customer) => {
+    axios
+      .put(`http://localhost:3000/customers/${customer.id}`, customer)
+      .then(() => {
+        fetchCustomers();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleDeleteProduct = (customer) => {
+    axios
+      .delete(`http://localhost:3000/customers/${customer.id}`)
+      .then(() => {
+        fetchCustomers();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleSubmit = () => {
+    const customerData = {
+      name: customerName,
+      phone: customerPhone,
+      email: customerEmail,
+      birth: customerBirth,
+      address: customerAddress,
+      city: customerCity,
+      gender: customerGender,
+    };
+
+    if (
+      customerName.trim() === '' ||
+      customerPhone.trim() === '' ||
+      customerEmail.trim() === '' ||
+      customerBirth.trim() === '' ||
+      customerAddress.trim() === '' ||
+      customerCity.trim() === '' ||
+      customerGender.trim() === ''
+    ) {
+      console.log('Please fill in all product information.');
+      return;
+    }
+
+    if (customer.id) {
+      const updatedCustomer = { ...customer, ...customerData };
+      handleUpdateProduct(updatedCustomer);
+    } else {
+      handleAddProduct(customerData);
+    }
+
+    handleClose();
   };
 
   return (
@@ -59,13 +163,120 @@ function CustomerManagement() {
           ADD
         </button>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Add Customer</DialogTitle>
-          <DialogContent>
-            <AddCustomer />
-          </DialogContent>
+          <DialogTitle>{customer.id ? 'Edit Customer' : 'Add Customer'}</DialogTitle>
+          <form onSubmit={handleSubmit}>
+            <DialogContent>
+              <div className={cx('container')}>
+                <div className={cx('row-form')}>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Customer"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    autoComplete="on"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                  />
+                </div>
+                <div className={cx('row-form')}>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="email"
+                    label="Email"
+                    type="email"
+                    fullWidth
+                    variant="standard"
+                    autoComplete="on"
+                    value={customerEmail}
+                    onChange={(e) => setCustomerEmail(e.target.value)}
+                  />
+                </div>
+                <div className={cx('row-form')}>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="mobile"
+                    label="Mobie"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    autoComplete="on"
+                    value={customerPhone}
+                    onChange={(e) => setCustomerPhone(e.target.value)}
+                  />
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="birth"
+                    label="Date of Birth"
+                    type="date"
+                    fullWidth
+                    variant="standard"
+                    autoComplete="on"
+                    value={customerBirth}
+                    onChange={(e) => setcustomerBirth(e.target.value)}
+                  />
+                </div>
+                <div className={cx('row-form')}>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="address"
+                    label="Address"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    autoComplete="on"
+                    value={customerAddress}
+                    onChange={(e) => setCustomerAddress(e.target.value)}
+                  />
+
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="city"
+                    label="City"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    autoComplete="on"
+                    value={customerCity}
+                    onChange={(e) => setCustomerCity(e.target.value)}
+                  />
+                </div>
+                <div className={cx('row-form')}>
+                  <FormControl style={{ margin: '8px 0' }} variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="Gender">Gender</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-standard-label"
+                      id="gender"
+                      value={customerGender}
+                      onChange={(e) => setCustomerGender(e.target.value)}
+                      label="gender"
+                    >
+                      <MenuItem value={'male'}>male</MenuItem>
+                      <MenuItem value={'female'}>female</MenuItem>
+                      <MenuItem value={'others'}>others</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+            </DialogContent>
+          </form>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleClose}>Submit</Button>
+            <Button
+              onClick={() => {
+                handleSubmit();
+                handleClose();
+              }}
+            >
+              {customer.id ? 'Update Entry' : 'Submit'}
+            </Button>
           </DialogActions>
         </Dialog>
         <div className={cx('search-site')}>
@@ -90,22 +301,25 @@ function CustomerManagement() {
         <div className={cx('table')}>
           <div className={cx('table-grid')}>
             <div className={cx('row-site')}>
-              <h5 className={cx('row-title')}>Customer</h5>
+              <h5 className={cx('row-title')}>CustomerID</h5>
             </div>
             <div className={cx('row-site')}>
               <h5 className={cx('row-title')}>Name</h5>
             </div>
             <div className={cx('row-site')}>
-              <h5 className={cx('row-title')}>Phone</h5>
+              <h5 className={cx('row-title')}>Mobile</h5>
             </div>
             <div className={cx('row-site')}>
               <h5 className={cx('row-title')}>Email</h5>
             </div>
             <div className={cx('row-site')}>
-              <h5 className={cx('row-title')}>BirthDay</h5>
+              <h5 className={cx('row-title')}>Date of Birth</h5>
             </div>
             <div className={cx('row-site')}>
               <h5 className={cx('row-title')}>Address</h5>
+            </div>
+            <div className={cx('row-site')}>
+              <h5 className={cx('row-title')}>City</h5>
             </div>
             <div className={cx('row-site')}>
               <h5 className={cx('row-title')}>Gender</h5>
@@ -114,34 +328,47 @@ function CustomerManagement() {
               <h5 className={cx('row-title')}>Actions</h5>
             </div>
           </div>
-          {sampleData.map((val, key) => {
+          {filtered.map((cus) => {
             return (
-              <div key={key} className={cx('table-grid', 'item-grid')}>
+              <div key={cus.id} className={cx('table-grid', 'item-grid')}>
                 <div className={cx('item-site')}>
-                  <p className={cx('item-content')}>{val.customer}</p>
+                  <p className={cx('item-content')}>{cus.id}</p>
+                </div>
+                <div className={cx('item-site1')}>
+                  <p className={cx('item-content')}>{cus.name}</p>
                 </div>
                 <div className={cx('item-site')}>
-                  <p className={cx('item-content')}>{val.name}</p>
+                  <p className={cx('item-content')}>{cus.phone}</p>
                 </div>
                 <div className={cx('item-site')}>
-                  <p className={cx('item-content')}>{val.phone}</p>
+                  <p className={cx('item-content')}>{cus.email}</p>
                 </div>
                 <div className={cx('item-site')}>
-                  <p className={cx('item-content')}>{val.email}</p>
+                  <p className={cx('item-content')}>{cus.birth}</p>
                 </div>
                 <div className={cx('item-site')}>
-                  <p className={cx('item-content')}>{val.birth}</p>
+                  <p className={cx('item-content')}>{cus.address}</p>
                 </div>
                 <div className={cx('item-site')}>
-                  <p className={cx('item-content')}>{val.address}</p>
+                  <p className={cx('item-content')}>{cus.city}</p>
                 </div>
                 <div className={cx('item-site')}>
-                  <p className={cx('item-content')}>{val.gender}</p>
+                  <p className={cx('item-content')}>{cus.gender}</p>
                 </div>
                 <div className={cx('item-site')}>
                   <div className={cx('wrapper-icon')}>
-                    <FontAwesomeIcon className={cx('icon-action')} icon={faPencil} />
-                    <FontAwesomeIcon className={cx('icon-action')} icon={faTrash} />
+                    <FontAwesomeIcon
+                      className={cx('icon-action')}
+                      icon={faPencil}
+                      onClick={() => {
+                        handleClickOpen(cus);
+                      }}
+                    />
+                    <FontAwesomeIcon
+                      className={cx('icon-action')}
+                      icon={faTrash}
+                      onClick={() => handleDeleteProduct(cus)}
+                    />
                   </div>
                 </div>
               </div>
@@ -153,4 +380,4 @@ function CustomerManagement() {
   );
 }
 
-export default CustomerManagement;
+export default ProductManagement;

@@ -26,6 +26,28 @@
   }
 }
 
+.container {
+  max-width: 1080px;
+  overflow-x: visible;
+  .row-form {
+    width: 50vh;
+  }
+}
+
+.row-form {
+  display: flex;
+  gap: 18px;
+
+  TextField {
+    width: 100%;
+    font-size: 1.6rem;
+  }
+
+  FormControl {
+    margin: 8px 0 !important;
+  }
+}
+
 .search-site {
   height: 100%;
   display: flex;
@@ -96,7 +118,7 @@
 
 .table-grid {
   display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-columns: repeat(9, minmax(0, 1fr));
 }
 
 .row-site {
@@ -113,6 +135,29 @@
   line-height: 1.5rem;
 }
 
+.size-grid {
+  display: flex;
+  flex-direction: row;
+  &FormControlLabel {
+    flex-direction: row;
+  }
+}
+
+.size-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.item-site1 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1.25rem;
+  font-size: 1.4rem;
+  background-color: white;
+}
+
 .item-site {
   display: flex;
   align-items: center;
@@ -126,17 +171,17 @@
   display: block;
 }
 
-.wrapper-icon{
+.wrapper-icon {
   display: flex;
   width: 100%;
   justify-content: center;
 }
 
-.icon-action{
+.icon-action {
   font-size: 1.6rem;
   padding: 8px;
 
-  &:hover{
+  &:hover {
     cursor: pointer;
     border-radius: 99px;
     background-color: #aac8a7;
