@@ -189,6 +189,28 @@
       "username": "thanh123",
       "password": "123456",
       "role": "user"
+    },
+    {
+      "email": "tanhero2002@gmail.com",
+      "username": "tanhero2002",
+      "password": "123456",
+      "firstName": "Nguyen",
+      "lastName": "Tan",
+      "birthdate": "2023-06-15",
+      "gender": "male",
+      "role": "user",
+      "id": 3
+    },
+    {
+      "email": "thanh@gmail.com",
+      "username": "thanh456",
+      "password": "123456",
+      "firstName": "Nguyen",
+      "lastName": "Tan",
+      "birthdate": "2023-06-09",
+      "gender": "male",
+      "role": "user",
+      "id": 4
     }
   ]
 }

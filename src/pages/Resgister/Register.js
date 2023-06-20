@@ -10,7 +10,7 @@ import FormLabel from '@mui/material/FormLabel';
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import config from '~/config';
+// import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -29,7 +29,6 @@ function Register() {
   const [firstNameError, setFirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
   const [birthdateError, setBirthdateError] = useState('');
-  const [genderError, setGenderError] = useState('');
 
   useEffect(() => {
     fetchUser();
@@ -57,13 +56,21 @@ function Register() {
   const validateForm = () => {
     let isValid = true;
 
+    // Check if email is empty or already exists
     if (!email) {
       setEmailError('Please enter an email');
       isValid = false;
+    } else if (user.some((u) => u.email === email)) {
+      setEmailError('Email already exists. Please choose a different email');
+      isValid = false;
     }
 
+    // Check if username is empty or already exists
     if (!username) {
       setUsernameError('Please enter a username');
+      isValid = false;
+    } else if (user.some((u) => u.username === username)) {
+      setUsernameError('Username already exists. Please choose a different username');
       isValid = false;
     }
 
@@ -87,35 +94,41 @@ function Register() {
       isValid = false;
     }
 
-    if (!gender) {
-      setGenderError('Please select your gender');
-      isValid = false;
-    }
-
     return isValid;
   };
 
   const handleSubmit = (e) => {
-    e.prevemtDefault();
+    e.preventDefault();
 
     // Create an object with the user's registration data
-    const userData = {
-      email,
-      username,
-      password,
-      firstName,
-      lastName,
-      birthdate,
-      gender,
-      role: 'user',
-    };
+    if (validateForm()) {
+      const userData = {
+        email,
+        username,
+        password,
+        firstName,
+        lastName,
+        birthdate,
+        gender,
+        role: 'user',
+      };
 
-    handleRegisterUser(userData);
-    // window.location.href = config.routes.home; // Replace with the appropriate URL or route
-    console.log(userData);
+      handleRegisterUser(userData);
+      // window.location.href = config.routes.home; // Replace with the appropriate URL or route
+      console.log(userData);
+
+      // Reset the form fields after successful submission
+      setEmail('');
+      setUsername('');
+      setPassword('');
+      setFirstName('');
+      setLastName('');
+      setBirthdate('');
+      setGender('');
+    }
   };
 
-  const isSubmitDisabled = !email || !username || !password || !firstName || !lastName || !birthdate || !gender;
+  // const isSubmitDisabled = !email || !username || !password || !firstName || !lastName || !birthdate || !gender;
 
   return (
     <div className={cx('wrapper')}>
@@ -135,9 +148,8 @@ function Register() {
                     setEmail(e.target.value);
                     setEmailError('');
                   }}
-                >
-                </input>
-                  {emailError && <p className={cx('error-message')}>{emailError}</p>}
+                ></input>
+                {emailError && <p className={cx('error-message')}>{emailError}</p>}
               </div>
               <div className={cx('input-container')}>
                 <input
@@ -149,9 +161,8 @@ function Register() {
                     setUsername(e.target.value);
                     setUsernameError('');
                   }}
-                >
-                </input>
-                  {usernameError && <p className={cx('error-message')}>{usernameError}</p>}
+                ></input>
+                {usernameError && <p className={cx('error-message')}>{usernameError}</p>}
               </div>
               <div className={cx('input-container')}>
                 <input
@@ -162,9 +173,9 @@ function Register() {
                   onChange={(e) => {
                     setPassword(e.target.value);
                     setPasswordError('');
-                  }}                >
-                </input>
-                  {passwordError && <p className={cx('error-message')}>{passwordError}</p>}
+                  }}
+                ></input>
+                {passwordError && <p className={cx('error-message')}>{passwordError}</p>}
               </div>
               <div className={cx('split-content')}>
                 <div className={cx('w-content')}>
@@ -224,12 +235,7 @@ function Register() {
                   </RadioGroup>
                 </FormControl>
               </div>
-              <button
-                className={cx('submit', { disabled: !isSubmitDisabled ? 'disabled' : 'submit' })}
-                type="submit"
-                onClick={handleSubmit}
-                disabled={isSubmitDisabled}
-              >
+              <button className={cx('submit')} type="submit" onClick={handleSubmit}>
                 Sign up
               </button>
             </form>
