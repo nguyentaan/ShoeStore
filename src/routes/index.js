@@ -17,6 +17,8 @@ import CustomerManagement from '~/pages/CustomerManagement';
 import ProductManagement from '~/pages/ProductManagement';
 import SupplierManagement from '~/pages/SuppilerManagement/SupplierManagement';
 import InventoryManagement from '~/pages/InventoryManagement/InventoryManagement';
+import InvoiceManagement from '~/pages/InvoiceManagement/InvoiceManagement';
+import Report from '~/pages/Report/Report';
 
 //public Routes
 const publicRoutes = [
@@ -32,6 +34,8 @@ const publicRoutes = [
   { path: config.routes.productmanagement, component: ProductManagement, layout: AdminLayout },
   { path: config.routes.suppliermanagement, component: SupplierManagement, layout: AdminLayout },
   { path: config.routes.inventorymanagement, component: InventoryManagement, layout: AdminLayout },
+  { path: config.routes.invoicemanagement, component: InvoiceManagement, layout: AdminLayout },
+  { path: config.routes.report, component: Report, layout: AdminLayout },
 ];
 
 //private routes

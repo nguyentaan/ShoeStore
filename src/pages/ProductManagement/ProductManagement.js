@@ -184,7 +184,7 @@ function ProductManagement() {
                   <TextField
                     autoFocus
                     margin="dense"
-                    id="number"
+                    id="formatted-numberformat-input"
                     label="price"
                     type="number"
                     fullWidth

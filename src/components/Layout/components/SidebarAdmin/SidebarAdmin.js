@@ -7,7 +7,6 @@ import {
   faFileInvoice,
   faFilePdf,
   faList,
-  faUsersRectangle,
   faWarehouse,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
@@ -59,7 +58,7 @@ function SidebarAdmin() {
             <div className={cx('nav-icon')}>
               <FontAwesomeIcon icon={faBoxesPacking} />
             </div>
-            <span className={cx('nav-title')}>Supplier Management</span>
+            <span className={cx('nav-title')}>Import Management</span>
           </Link>
         </li>
         <li className={cx('nav-items')}>
@@ -75,18 +74,8 @@ function SidebarAdmin() {
           </Link>
         </li>
         <li className={cx('nav-items')}>
-          <div
-            className={cx('nav-link', `${activeItem === 'user' ? 'active' : ''}`)}
-            onClick={() => handleItemClick('user')}
-          >
-            <div className={cx('nav-icon')}>
-              <FontAwesomeIcon icon={faUsersRectangle} />
-            </div>
-            <span className={cx('nav-title')}>User Management</span>
-          </div>
-        </li>
-        <li className={cx('nav-items')}>
-          <div
+          <Link
+            to={config.routes.invoicemanagement}
             className={cx('nav-link', `${activeItem === 'invoice' ? 'active' : ''}`)}
             onClick={() => handleItemClick('invoice')}
           >
@@ -94,18 +83,19 @@ function SidebarAdmin() {
               <FontAwesomeIcon icon={faFileInvoice} />
             </div>
             <span className={cx('nav-title')}>Invoice Management</span>
-          </div>
+          </Link>
         </li>
         <li className={cx('nav-items')}>
-          <div
+          <Link
+            to={config.routes.report}
             className={cx('nav-link', `${activeItem === 'report' ? 'active' : ''}`)}
             onClick={() => handleItemClick('report')}
           >
             <div className={cx('nav-icon')}>
               <FontAwesomeIcon icon={faFilePdf} />
             </div>
-            <span className={cx('nav-title')}>Report</span>
-          </div>
+            <span className={cx('nav-title')}>Statistical</span>
+          </Link>
         </li>
       </ul>
     </div>

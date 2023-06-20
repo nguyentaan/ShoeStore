@@ -16,6 +16,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import axios from 'axios';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const cx = classNames.bind(styles);
 
@@ -100,8 +102,12 @@ function ProductManagement() {
       .post('http://localhost:3000/customers', customer)
       .then(() => {
         fetchCustomers();
+        alert('The action has been successfully executed.');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        alert('The action has been failed executed.');
+      });
   };
 
   const handleUpdateProduct = (customer) => {
@@ -109,8 +115,12 @@ function ProductManagement() {
       .put(`http://localhost:3000/customers/${customer.id}`, customer)
       .then(() => {
         fetchCustomers();
+        alert('The action has been successfully executed.');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        alert('The action has been failed executed.');
+      });
   };
 
   const handleDeleteProduct = (customer) => {
@@ -118,8 +128,12 @@ function ProductManagement() {
       .delete(`http://localhost:3000/customers/${customer.id}`)
       .then(() => {
         fetchCustomers();
+        alert('The action has been successfully executed.');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        alert('The action has been failed executed.');
+      });
   };
 
   const handleSubmit = () => {
@@ -142,7 +156,8 @@ function ProductManagement() {
       customerCity.trim() === '' ||
       customerGender.trim() === ''
     ) {
-      console.log('Please fill in all product information.');
+      console.error('Please fill in all product information.');
+      alert('The action has been failed executed.');
       return;
     }
 
@@ -154,6 +169,30 @@ function ProductManagement() {
     }
 
     handleClose();
+  };
+
+  const handleCustomerChange = (e) => {
+    const inputValue = e.target.value;
+    const regex = /^[a-zA-Z\s-]*$/;
+    if (regex.test(inputValue)) {
+      setCustomerName(inputValue);
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    const inputValue = e.target.value;
+    const regex = /^\d{0,10}$/;
+    if (inputValue === '' || (regex.test(inputValue) && parseInt(inputValue) >= 0)) {
+      setCustomerPhone(inputValue);
+    }
+  };
+
+  const handleCityChange = (e) => {
+    const inputValue = e.target.value;
+    const regex = /^[a-zA-Z\s-]*$/;
+    if (regex.test(inputValue)) {
+      setCustomerCity(inputValue);
+    }
   };
 
   return (
@@ -178,7 +217,7 @@ function ProductManagement() {
                     variant="standard"
                     autoComplete="on"
                     value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
+                    onChange={handleCustomerChange}
                   />
                 </div>
                 <div className={cx('row-form')}>
@@ -200,13 +239,13 @@ function ProductManagement() {
                     autoFocus
                     margin="dense"
                     id="mobile"
-                    label="Mobie"
+                    label="Mobile"
                     type="text"
                     fullWidth
                     variant="standard"
                     autoComplete="on"
                     value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
+                    onChange={handlePhoneChange}
                   />
                   <TextField
                     autoFocus
@@ -214,6 +253,9 @@ function ProductManagement() {
                     id="birth"
                     label="Date of Birth"
                     type="date"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     fullWidth
                     variant="standard"
                     autoComplete="on"
@@ -245,7 +287,7 @@ function ProductManagement() {
                     variant="standard"
                     autoComplete="on"
                     value={customerCity}
-                    onChange={(e) => setCustomerCity(e.target.value)}
+                    onChange={handleCityChange}
                   />
                 </div>
                 <div className={cx('row-form')}>
@@ -367,7 +409,9 @@ function ProductManagement() {
                     <FontAwesomeIcon
                       className={cx('icon-action')}
                       icon={faTrash}
-                      onClick={() => handleDeleteProduct(cus)}
+                      onClick={() => {
+                        handleDeleteProduct(cus);
+                      }}
                     />
                   </div>
                 </div>

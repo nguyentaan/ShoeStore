@@ -47,12 +47,12 @@ const MENU_ITEMS = [
   },
   {
     title: 'Log Out',
-    to: '/logout',
+    to: '/login',
   },
 ];
 
 function Header() {
-  const currentUser = true;
+  const currentUser = false;
   const [productResult, setProductResult] = useState([]);
 
   useEffect(() => {
