@@ -4,7 +4,7 @@ const routes = {
   male: '/male',
   female: '/female',
   profile: '/profile',
-  productItem: '/productitem',
+  productItemPage: '/productitempage',
   login: '/login',
   register: '/register',
   customermanagement: '/customermanagement',

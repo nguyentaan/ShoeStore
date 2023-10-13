@@ -2,11 +2,11 @@ import { faChevronDown, faChevronUp, faStar } from '@fortawesome/free-solid-svg-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
-import styles from './productItem.module.scss';
+import styles from './productItemPage.module.scss';
 
 const cx = classNames.bind(styles);
 
-function productItem() {
+function ProductItemPage() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [collapsed, setCollapsed] = useState(true);
 
@@ -296,4 +296,4 @@ function productItem() {
   );
 }
 
-export default productItem;
+export default ProductItemPage;

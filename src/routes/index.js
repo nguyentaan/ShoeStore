@@ -10,7 +10,7 @@ import Product from '~/pages/Product';
 import Male from '~/pages/Male';
 import Female from '~/pages/Female';
 import Profile from '~/pages/Profile';
-import ProductItem from '~/pages/ProductItem';
+import ProductItemPage from '~/pages/ProductItemPage';
 import Login from '~/pages/Login';
 import Register from '~/pages/Resgister';
 import CustomerManagement from '~/pages/CustomerManagement';
@@ -27,7 +27,7 @@ const publicRoutes = [
   { path: config.routes.male, component: Male, layout: HeaderOnly },
   { path: config.routes.female, component: Female, layout: HeaderOnly },
   { path: config.routes.profile, component: Profile, layout: HeaderOnly },
-  { path: config.routes.productItem, component: ProductItem, layout: HeaderOnly },
+  { path: config.routes.ProductItemPage, component: ProductItemPage, layout: HeaderOnly },
   { path: config.routes.login, component: Login, layout: DefaultLayout },
   { path: config.routes.register, component: Register, layout: DefaultLayout },
   { path: config.routes.customermanagement, component: CustomerManagement, layout: AdminLayout },
