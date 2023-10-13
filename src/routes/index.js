@@ -7,17 +7,17 @@ import AdminLayout from '~/components/Layout/AdminLayout/AdminLayout';
 //Pages
 import Home from '~/pages/Home';
 import Product from '~/pages/Product';
-import Male from '~/pages/Male/Male';
+import Male from '~/pages/Male';
 import Female from '~/pages/Female';
 import Profile from '~/pages/Profile';
-import ProductItem from '~/pages/ProductItem/ProductItem';
+import ProductItem from '~/pages/ProductItem';
 import Login from '~/pages/Login';
 import Register from '~/pages/Resgister';
 import CustomerManagement from '~/pages/CustomerManagement';
 import ProductManagement from '~/pages/ProductManagement';
-import SupplierManagement from '~/pages/SuppilerManagement/SupplierManagement';
-import InventoryManagement from '~/pages/InventoryManagement/InventoryManagement';
-import InvoiceManagement from '~/pages/InvoiceManagement/InvoiceManagement';
+import SupplierManagement from '~/pages/SuppilerManagement';
+import InventoryManagement from '~/pages/InventoryManagement';
+import InvoiceManagement from '~/pages/InvoiceManagement';
 import Report from '~/pages/Report/Report';
 
 //public Routes
