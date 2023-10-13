@@ -22,11 +22,71 @@
 }
 
 .container {
-  display: inline-block;
-  width: 100%;
+  position: relative;
+  width: 100%; /* Set the width to 100% to fit the screen */
   height: 750px;
-  margin-top: 10px;
-  margin-bottom: 80px;
+  overflow: hidden;
+}
+
+.list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  width: max-content;
+  transition: transform 0.3s ease-in-out; /* Add a transition for smooth sliding */
+}
+
+.list img {
+  width: 100%; /* Set the width to 100% to fit the container */
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.buttons {
+  position: absolute;
+  top: 45%;
+  left: 5%;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #fff5;
+  color: #fff;
+  border: none;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.dots {
+  position: absolute;
+  bottom: 10px;
+  color: #fff;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.dots li {
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  margin: 20px;
+  border-radius: 20px;
+  transition: width 0.3s ease-in-out; /* Thêm hiệu ứng chuyển đổi */
+}
+
+.dots li.active {
+  width: 30px;
 }
 
 .thumbnail {
@@ -59,7 +119,7 @@
   border: 1px solid #151415;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     color: #767677;
     border: 1px solid #767677;
   }
