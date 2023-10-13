@@ -21,14 +21,6 @@ function Home() {
   ];
 
   const [activeBrand, setActiveBrand] = useState(0);
-
-  // const nextBrand = () => {
-  //   setActiveBrand((prevActive) => (prevActive + 1 <= brands.length - 1 ? prevActive + 1 : 0));
-  // };
-
-  // const prevBrand = () => {
-  //   setActiveBrand((prevActive) => (prevActive - 1 >= 0 ? prevActive - 1 : brands.length - 1));
-  // };
   const nextBrand = () => {
     setActiveBrand((prevActive) => (prevActive + 1 < brands.length ? prevActive + 1 : 0));
   };
@@ -43,7 +35,7 @@ function Home() {
     return () => {
       clearInterval(interval);
     };
-  }, [activeBrand]);
+  });
 
   const onDotClick = (index) => {
     setActiveBrand(index);
